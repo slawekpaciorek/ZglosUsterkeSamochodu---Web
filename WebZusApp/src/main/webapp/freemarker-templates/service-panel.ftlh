@@ -65,7 +65,11 @@
                                                 <li>Dodatkowe informacje : </li>
                                             </ul></div>
                                             <div class="col-md-10 col-sm-12 orderDetailsCard"><h4>Uwagi : </h4></div>
-                                            <div class="col-md-2 col-sm-12 orderDetailsCard"><h4>Status :</h4></div>
+                                            <div class="col-md-2 col-sm-12 orderDetailsCard"><h4>Status : <ul>
+                                                <li>Przyjęte</li>
+                                                <li>W realizacji</li>
+                                                <li>Wysłane</li>
+                                            </ul></h4></div>
                                         </div>
                                     </div>
                                 </div>
