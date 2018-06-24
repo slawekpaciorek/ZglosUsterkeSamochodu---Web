@@ -29,7 +29,7 @@ public class IndexServlet extends HttpServlet {
     @Override
     public void init()throws ServletException {
         try {
-            template = TemplateSupplier.createTemplate(getServletContext(), "index.ftlh");
+            template = TemplateSupplier.createTemplate(getServletContext(), "main.ftlh");
         } catch (IOException ex) {
             logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
@@ -41,6 +41,8 @@ public class IndexServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw= response.getWriter();
         Map<String, Object> data  = new HashMap<>();
+
+        data.put("content", "contents/index");
 
         try{
             template.process(data, pw);

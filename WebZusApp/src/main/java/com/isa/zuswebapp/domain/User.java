@@ -1,4 +1,4 @@
-package com.isa.zuswebapp;
+package com.isa.zuswebapp.domain;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -67,19 +67,14 @@ public class User {
         return userAdress;
     }
 
-    public void setUserAdress() throws InstantiationException, IllegalAccessException {
+    public void setUserAdress(String country, String city, String street) throws InstantiationException, IllegalAccessException {
         this.userAdress = new HashMap<>();
 
         Adress adress = new Adress();
 
-            String country = adress.getCountry();
-            String city = adress.getCity();
-            String street = adress.getStreetNumberAndHouse();
-
             userAdress.put("country", country);
             userAdress.put("city", city);
             userAdress.put("streetNumberAndHouse" , street);
-
 
     }
 

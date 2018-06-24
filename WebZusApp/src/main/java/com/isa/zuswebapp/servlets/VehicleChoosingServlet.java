@@ -16,36 +16,35 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@WebServlet("register")
-public class RegistryServlet extends HttpServlet {
+@WebServlet("vehicle-choosing")
+public class VehicleChoosingServlet extends HttpServlet{
 
-    Logger log = Logger.getLogger(getClass().getName());
+    Logger logger = Logger.getLogger(getClass().getName());
     Template template;
 
-    public void init() throws ServletException {
+    public void init() throws ServletException{
 
         try{
             template = TemplateSupplier.createTemplate(getServletContext(), "main.ftlh");
-        }catch (IOException ex){
-            log.log(Level.SEVERE, ex.getMessage(), ex);
+        }catch(IOException ex){
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
-
 
     }
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
-    protected void doGet(HttpServletRequest rq, HttpServletResponse rp) throws ServletException,IOException{
-
-        rp.setContentType("text/html;charset=UTF-8");
-        PrintWriter pw = rp.getWriter();
+        response.setContentType("text/html;charset=UTF-8");
+        PrintWriter pw = response.getWriter();
         Map<String, Object> data = new HashMap<>();
 
-        data.put("content", "contents/register");
+        data.put("content", "contents/vehicle-choosing");
 
         try{
             template.process(data, pw);
         }catch (TemplateException ex){
-            log.log(Level.SEVERE, ex.getMessage(), ex);
+            logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
+
     }
 }

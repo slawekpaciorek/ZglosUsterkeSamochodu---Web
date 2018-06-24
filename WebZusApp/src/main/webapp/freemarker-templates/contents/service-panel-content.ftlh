@@ -1,5 +1,4 @@
 <#ftl encoding='UTF-8'>
-<#include "header.ftlh">
 
 <main>
 
@@ -42,11 +41,35 @@
                                             <div class="col-sm-12">
                                                 <h4>Zamowienie nr : <strong>numer zamówienia</strong></h4>
                                             </div>
-                                            <div class="col-md-4 col-sm-12"><h4>Dane zamawiającego</h4></div>
-                                            <div class="col-md-4 col-sm-12"><h4>Szczegóły pojazdu</h4></div>
-                                            <div class="col-md-4 col-sm-12"><h4>Szczegóły części</h4></div>
-                                            <div class="col-md-10 col-sm-12"><h4>Uwagi : </h4></div>
-                                            <div class="col-md-2 col-sm-12"><h4>Status :</h4></div>
+                                            <div class="col-md-4 col-sm-12 orderDetailsCard"><h4>Dane zamawiającego</h4>
+                                            <ul>
+                                                <li>Nazwa użytkownika : </li>
+                                                <li>Imię : </li>
+                                                <li>Nazwisko : </li>
+                                                <li>Adres : </li>
+                                            </ul></div>
+                                            <div class="col-md-4 col-sm-12 orderDetailsCard"><h4>Szczegóły pojazdu</h4>
+                                            <ul>
+                                                <li>Marka : </li>
+                                                <li>Model : </li>
+                                                <li>Rok produkcji : </li>
+                                                <li>Wersja : </li>
+                                            </ul></div>
+                                            <div class="col-md-4 col-sm-12 orderDetailsCard"><h4>Szczegóły części</h4><ul>
+                                                <li>Id: </li>
+                                                <li>Numer : </li>
+                                                <li>Nazwa : </li>
+                                                <li>Producent : </li>
+                                                <li>Właściwości : </li>
+                                                <li>Dodatkowe informacje : </li>
+                                            </ul></div>
+                                            <div class="col-md-10 col-sm-12 orderDetailsCard"><h4>Uwagi : </h4></div>
+                                            <div class="col-md-2 col-sm-12 orderDetailsCard"><h4>Status : </h4><ul>
+                                                <li>Przyjęte</li>
+                                                <li>W realizacji</li>
+                                                <li>Wysłane</li>
+                                            </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -63,5 +86,3 @@
     </div>
 
 </main>
-
-<#include "footer.ftlh">

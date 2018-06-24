@@ -1,4 +1,3 @@
-<#include "header.ftlh">
 
 <main>
 
@@ -36,4 +35,3 @@
 
 
 </main>
-<#include  "footer.ftlh">
