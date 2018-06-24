@@ -1,5 +1,4 @@
 <#ftl encoding='UTF-8'>
-<#include "header.ftlh">
 
 <main>
 <h3>Wybierz swoje auto : </h3>
@@ -14,4 +13,3 @@
 
 </main>
 
-<#include "footer.ftlh">

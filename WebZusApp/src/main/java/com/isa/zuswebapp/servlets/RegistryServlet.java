@@ -25,7 +25,7 @@ public class RegistryServlet extends HttpServlet {
     public void init() throws ServletException {
 
         try{
-            template = TemplateSupplier.createTemplate(getServletContext(), "register.ftlh");
+            template = TemplateSupplier.createTemplate(getServletContext(), "main.ftlh");
         }catch (IOException ex){
             log.log(Level.SEVERE, ex.getMessage(), ex);
         }
@@ -39,6 +39,8 @@ public class RegistryServlet extends HttpServlet {
         rp.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = rp.getWriter();
         Map<String, Object> data = new HashMap<>();
+
+        data.put("content", "contents/register");
 
         try{
             template.process(data, pw);

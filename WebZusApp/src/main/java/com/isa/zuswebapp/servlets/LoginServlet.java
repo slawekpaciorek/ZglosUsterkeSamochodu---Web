@@ -1,9 +1,14 @@
 package com.isa.zuswebapp.servlets;
 
+import com.isa.zuswebapp.cdi.UserCDISessionDao;
+import com.isa.zuswebapp.dao.UserRepoDao;
+import com.isa.zuswebapp.domain.User;
 import com.isa.zuswebapp.freemarker.TemplateSupplier;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +24,10 @@ import java.util.logging.Logger;
 @WebServlet("login")
 public class LoginServlet extends HttpServlet {
 
+
+    @Inject
+    UserCDISessionDao userCDISessionDao;
+
     Logger logger = Logger.getLogger(getClass().getName());
 
     Template template;
@@ -26,7 +35,7 @@ public class LoginServlet extends HttpServlet {
     public void init() throws ServletException{
 
         try{
-            template = TemplateSupplier.createTemplate(getServletContext(), "login.ftlh");
+            template = TemplateSupplier.createTemplate(getServletContext(), "main.ftlh");
         }catch (IOException ex){
             logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
@@ -38,10 +47,28 @@ public class LoginServlet extends HttpServlet {
         PrintWriter pw = response.getWriter();
         Map<String, Object> data = new HashMap<>();
 
+        data.put("content", "contents/login");
+
         try{
             template.process(data, pw);
         }catch (TemplateException ex){
             logger.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        String login = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        User user = userCDISessionDao.getUser(login,password);
+
+        if(user!=null){
+
+
+
         }
 
     }

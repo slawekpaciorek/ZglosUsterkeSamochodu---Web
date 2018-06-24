@@ -17,10 +17,10 @@ public class UserRepoDaoBean implements UserRepoDao {
     }
 
     @Override
-    public User getUserByEmail(String email) {
+    public User getUserByEmail(String email, String password) {
         try {
             for(User user : UserRepo.getUserRepo()){
-                if(user.getEmail().equals(email))
+                if(user.getEmail().equals(email) && user.getPassword().equals(password))
                     return user;
             }
         } catch (InstantiationException e) {

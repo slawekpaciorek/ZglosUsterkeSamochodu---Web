@@ -1,5 +1,4 @@
 <#ftl encoding='UTF-8'>
-<#include "header.ftlh">
 
 <main>
 
@@ -87,5 +86,3 @@
     </div>
 
 </main>
-
-<#include "footer.ftlh">

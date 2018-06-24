@@ -26,7 +26,7 @@ public class ServiceServlet extends HttpServlet {
     public void init(){
 
         try{
-            template = TemplateSupplier.createTemplate(getServletContext(), "service-panel.ftlh");
+            template = TemplateSupplier.createTemplate(getServletContext(), "main.ftlh");
         }catch (IOException ex){
             logger.log(Level.SEVERE, ex.getMessage(), ex);
         }
@@ -39,6 +39,8 @@ public class ServiceServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         Map<String, Object> data = new HashMap();
         PrintWriter printWriter = response.getWriter();
+
+        data.put("content", "contents/service-panel");
 
         try{
             template.process(data, printWriter);

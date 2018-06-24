@@ -1,5 +1,4 @@
 <#ftl encoding='UTF-8'>
-<#include "header.ftlh">
 <main>
 
     <div class="pageContent container-fluid">
@@ -18,4 +17,3 @@
     </div>
 
 </main>
-<#include "footer.ftlh">
