@@ -11,10 +11,11 @@
                 <form>
                 <button type="submit" class="btn button" name="button" value="login" formaction="login">Logowanie</button>
                 <button type="submit" class="btn button" name="button" value="registry" formaction="register">Rejestracja</button>
-                <button type="button" class="btn button" name="button" value="continue">Kontynuuj</button>
+                <button type="submit" class="btn button" name="button" value="continue" formaction="vehicle-choosing">Kontynuuj</button>
                 </form>
             </div>
         </div>
     </div>
+
 </main>
 <#include "footer.ftlh">

@@ -276,7 +276,6 @@ header{
 #orderList div{
     border: solid 4px #424242;
     background-color: whitesmoke;
-    height: 100%;
 
 }
 
@@ -287,22 +286,22 @@ header{
     padding: 10px;
     margin-bottom: 0 ;
 }
+
 #orderList div,
 #orderDetails div{
     color: #424242;
     border-radius: 15px;
+    min-height: 100%;
 }
 
 #orderDetails{
     background-color: white;
     padding-left: 15px;
 
-
 }
 
 #orderDetails > div:first-child{
     border: solid 4px #424242;
-
 
 }
 
@@ -339,7 +338,6 @@ header{
     padding: 10px;
     min-height: 50px;
     background-color: white;
-    border: solid 1px lightgray ;
 }
 
 #orderDetails .orderDetailsCard{

@@ -18,7 +18,6 @@
                         <input type="text" placeholder="Wprowadź imię" name="userName" required>
                         <input type="text" placeholder="Wprowadź nazwisko" name="userSurname" required>
                         <input type="password" name="password" placeholder="Wprowadź hasło" required>
-                        <input type="password" name="password" placeholder="Powtórz hasło" required>
                         <input type="email" name="email" placeholder="Wprowadź email" required>
                         <input type="tel" name="phoneNumber" placeholder="Wprowadź numer teleonu">
                         <input type="date" name="dateOfBirth" placeholder="Wybierz datę urodzenia" required>
