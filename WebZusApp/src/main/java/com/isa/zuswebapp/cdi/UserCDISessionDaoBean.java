@@ -13,9 +13,21 @@ public class UserCDISessionDaoBean implements UserCDISessionDao, Serializable {
     @EJB
     UserRepoDao userRepoDao;
 
+    private User user;
+
+    @Override
+    public User getActualUser() {
+        return this.user;
+    }
+
     @Override
     public User getUser(String email, String password) {
-        return userRepoDao.getUserByEmail(email, password);
+
+        User user = userRepoDao.checkUserByEmail(email, password);
+
+        this.user = user;
+
+        return user;
     }
 
 }

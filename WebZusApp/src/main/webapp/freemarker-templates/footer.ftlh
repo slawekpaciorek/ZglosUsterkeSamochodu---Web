@@ -14,6 +14,7 @@
     <!--Page_Animation.js-->
 
     <script src="assetes/page_animation.js"></script>
+    <script src="assetes/operator.js"></script>
 
 </body>
 

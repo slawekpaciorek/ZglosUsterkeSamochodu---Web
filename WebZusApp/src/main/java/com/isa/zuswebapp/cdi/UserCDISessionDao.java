@@ -6,4 +6,6 @@ import javax.enterprise.context.SessionScoped;
 
 public interface UserCDISessionDao {
     User getUser(String email, String password);
+
+    User getActualUser();
 }

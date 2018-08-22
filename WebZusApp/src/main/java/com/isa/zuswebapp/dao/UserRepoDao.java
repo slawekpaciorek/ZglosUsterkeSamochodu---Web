@@ -10,7 +10,8 @@ public interface UserRepoDao {
 
     void adduser(User user);
 
-    User getUserByEmail(String email, String password);
+    User checkUserByEmail(String email, String password);
 
     List<User> getUserList();
+
 }

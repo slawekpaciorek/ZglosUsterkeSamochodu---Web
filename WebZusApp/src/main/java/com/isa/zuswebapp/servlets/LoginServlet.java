@@ -60,16 +60,19 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+        Map<String, Object> data = new HashMap<>();
+        PrintWriter pw = resp.getWriter();
+
+
         String login = req.getParameter("username");
         String password = req.getParameter("password");
 
         User user = userCDISessionDao.getUser(login,password);
 
-        if(user!=null){
+        if(user!=null) {
 
-
+            resp.sendRedirect("/vehicle-choosing");
 
         }
-
     }
 }

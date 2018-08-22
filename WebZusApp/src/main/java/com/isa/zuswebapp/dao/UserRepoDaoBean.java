@@ -17,7 +17,7 @@ public class UserRepoDaoBean implements UserRepoDao {
     }
 
     @Override
-    public User getUserByEmail(String email, String password) {
+    public User checkUserByEmail(String email, String password) {
         try {
             for(User user : UserRepo.getUserRepo()){
                 if(user.getEmail().equals(email) && user.getPassword().equals(password))
@@ -31,6 +31,7 @@ public class UserRepoDaoBean implements UserRepoDao {
 
         return null;
     }
+
 
     @Override
     public List<User> getUserList() {

@@ -10,10 +10,10 @@
 
                     <img src="/image/man.png">
 
-                    <form>
+                    <form method="post">
 
                         <input type="text" placeholder="Wprowadź nazwę użytkownia" name="username" required>
-                        <input type="text" name="password" placeholder="Wprowadź hasło" required>
+                        <input type="password" name="password" placeholder="Wprowadź hasło" required>
                         <button type="submit">Logowanie</button>
                         <button type="submit">Resetownia hasła</button>
 
