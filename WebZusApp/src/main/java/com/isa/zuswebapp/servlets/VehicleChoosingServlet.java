@@ -1,9 +1,8 @@
 package com.isa.zuswebapp.servlets;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonParser;
-import com.infoshareacademy.*;
+import com.infoshareacademy.Brands;
+import com.infoshareacademy.BrandsList;
+import com.isa.zuswebapp.cdi.CarsCDISessionDao;
 import com.isa.zuswebapp.cdi.UserCDISessionDao;
 import com.isa.zuswebapp.domain.Cars;
 import com.isa.zuswebapp.domain.User;
@@ -11,8 +10,6 @@ import com.isa.zuswebapp.freemarker.TemplateSupplier;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -23,14 +20,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Writer;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @WebServlet("vehicle-choosing")
 public class VehicleChoosingServlet extends HttpServlet{
@@ -42,6 +36,7 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     @Inject
     UserCDISessionDao userCDISessionDao;
+    CarsCDISessionDao carsCDISessionDao;
 
     public void init() throws ServletException{
 
@@ -66,7 +61,6 @@ public class VehicleChoosingServlet extends HttpServlet{
         data.put("brandList", listOfCars);
         data.put("content", "contents/vehicle-choosing");
 
-
         try{
             template.process(data, pw);
         }catch (TemplateException ex){
@@ -77,28 +71,12 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
-        PrintWriter printWriter = response.getWriter();
-        Map<String, Object> dataMap = new HashMap<>();
-
         response.setContentType("application/json");
-
-        String brandLink = request.getParameter("brand");
-
-        List<Models> listoOfModels = new ModelsList().getModelsList(brandLink);
-        List<String> namesOfModels = listoOfModels.stream().map(Models::getName).collect(Collectors.toList());
-
-        String json = new Gson().toJson(namesOfModels);
-        sendData(response, json);
-
-        linkHandler = brandLink;
+        ServletContext context = getServletContext();
+        RequestDispatcher dispatcher = context.getRequestDispatcher("/category-choosing");
+        dispatcher.include(request, response);
 
 
     }
 
-    public void sendData(HttpServletResponse response, String data) throws IOException{
-
-        PrintWriter pw = response.getWriter();
-        pw.write(data);
-        pw.flush();
-    }
 }

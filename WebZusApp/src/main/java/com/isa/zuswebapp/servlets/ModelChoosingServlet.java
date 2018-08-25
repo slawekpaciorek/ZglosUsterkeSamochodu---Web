@@ -1,60 +1,58 @@
 package com.isa.zuswebapp.servlets;
 
 import com.google.gson.Gson;
-import com.infoshareacademy.ModelDetailList;
-import com.infoshareacademy.ModelDetails;
+import com.infoshareacademy.Brands;
+import com.infoshareacademy.BrandsList;
 import com.infoshareacademy.Models;
 import com.infoshareacademy.ModelsList;
-import com.isa.zuswebapp.cdi.UserCDISessionDao;
-import freemarker.template.Template;
+import com.isa.zuswebapp.cdi.CarsCDISessionDao;
+import com.isa.zuswebapp.dao.CarsRepoDao;
+import com.isa.zuswebapp.domain.Cars;
 
 import javax.inject.Inject;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.registry.infomodel.User;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @WebServlet("model-choosing")
 public class ModelChoosingServlet extends HttpServlet {
 
+    private static String linkHandler;
 
-//    Logger logger = Logger.getLogger(getClass().getName());
-//    Template template;
-
-
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
+    @Inject
+    CarsCDISessionDao carCDISessionDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
-        String modelName = req.getParameter("model");
-        String link = VehicleChoosingServlet.linkHandler;
-        List<Models> modelsList = new ModelsList().getModelsList(link);
+        String link= req.getParameter("brand");
+        setLinkHandler(link);
 
-        String modelLink = modelsList.stream()
-                .filter(x->x.getName().equals(modelName))
-                .findAny()
-                .get()
-                .getLink();
+        Cars cars = new Cars();
+        Brands brand = new BrandsList().getBrandsList().stream().filter(brands->brands.getLink().equals(link)).findAny().get();
+        cars.setBrand(brand);
+        carCDISessionDao.setActualCar(cars);
 
-        List<ModelDetails> versions = new ModelDetailList().getModelDetails(modelLink);
-        List<String> versionNames = versions.stream().map(ModelDetails::getName).collect(Collectors.toList());
+        List<Models> listOfModels = new ModelsList().getModelsList(link);
+        List<String> listOfModelsNames = listOfModels.stream().map(model->model.getName()).collect(Collectors.toList());
 
-        String json = new Gson().toJson(versionNames);
-        resp.getWriter().write(json);
+        String jsonBrands = new Gson().toJson(listOfModelsNames);
+        resp.getWriter().write(jsonBrands);
+        resp.getWriter().flush();
 
+    }
+
+    public static String getLinkHandler() {
+        return linkHandler;
+    }
+
+    public static void setLinkHandler(String linkHandler) {
+        ModelChoosingServlet.linkHandler = linkHandler;
     }
 }

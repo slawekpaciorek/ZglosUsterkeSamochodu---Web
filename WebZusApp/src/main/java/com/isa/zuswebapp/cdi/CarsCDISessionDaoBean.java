@@ -8,8 +8,16 @@ import java.io.Serializable;
 @SessionScoped
 public class CarsCDISessionDaoBean implements CarsCDISessionDao, Serializable {
 
+
+    private Cars car;
+
     @Override
     public Cars getActualCar() {
-        return null;
+        return this.car;
+    }
+
+    @Override
+    public void setActualCar(Cars car) {
+        this.car = car;
     }
 }

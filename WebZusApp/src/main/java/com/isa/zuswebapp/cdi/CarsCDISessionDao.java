@@ -6,4 +6,6 @@ public interface CarsCDISessionDao {
 
     Cars getActualCar();
 
+    void setActualCar(Cars car);
+
 }

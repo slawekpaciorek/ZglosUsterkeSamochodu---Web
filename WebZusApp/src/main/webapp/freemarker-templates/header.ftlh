@@ -17,7 +17,7 @@
 
         <div class="col-sm-12 col-md-4 menu">
 
-            <img src="../image/steering-wheel.png" class="img-fluid menu_button">
+            <img src="../image/menu.png" class="img-fluid menu_button">
 
             <ul class="menu_content">
                 <li><a href="">Start</a></li>

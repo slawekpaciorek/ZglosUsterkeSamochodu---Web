@@ -356,6 +356,47 @@ header{
     padding: 15px 10px;
     font-family: "Cabin";
 }
+.vehicle{
+    min-height: 35vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.vehicle select {
+    display: block;
+    margin: 20px auto;
+    width: 50%;
+    background-color: #424242;
+    color: white;
+    font-family: "Ubuntu";
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.vehicle-selected.select-arrow-active:after{
+    border-color: transparent transparent #fff transparent;
+}
+
+.vehicle label{
+    width: 50%;
+    display: block;
+    margin: auto;
+    padding: 10px;
+    font-family: Comfortaa;
+    font-size: 18px;
+}
+
+.vehicle label:first-of-type{
+    margin-top: 30px;
+}
+
+.title-bar{
+    text-align: center;
+    padding: 10px;
+    background-color: #424242;
+    color: white;
+    font-family: "Comfortaa";
+
+}
 
 
 

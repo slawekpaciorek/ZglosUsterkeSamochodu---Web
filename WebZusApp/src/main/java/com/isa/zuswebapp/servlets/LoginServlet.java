@@ -1,13 +1,11 @@
 package com.isa.zuswebapp.servlets;
 
 import com.isa.zuswebapp.cdi.UserCDISessionDao;
-import com.isa.zuswebapp.dao.UserRepoDao;
 import com.isa.zuswebapp.domain.User;
 import com.isa.zuswebapp.freemarker.TemplateSupplier;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

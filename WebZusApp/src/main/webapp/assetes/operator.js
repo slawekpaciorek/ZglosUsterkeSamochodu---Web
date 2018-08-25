@@ -4,7 +4,7 @@ $(document).ready(function(){
 
         $value = $(data.target).val();
 
-        $.post( "vehicle-choosing", {'brand' : $value})
+        $.post( "model-choosing", {'brand' : $value})
             .done(function( data ) {
 
                 var html = "";
@@ -24,7 +24,7 @@ $(document).ready(function(){
 
         $value = $(data.target).val();
 
-        $.post("model-choosing", {'model': $value})
+        $.post("version-choosing", {'model': $value})
             .done(function (data) {
                var html = "";
                for(var key in data){
@@ -37,5 +37,22 @@ $(document).ready(function(){
             });
 
     });
+
+    $('select#version').on('click', function (data) {
+
+        $value = $(data.target).val();
+
+        $.post("category-choosing", {'version': $value})
+            .done(function (data) {
+
+                var html = "";
+                for( var key in data){
+                    html += "<option>" + data[key] + "</option>";
+                }
+                $("select#category").html(html);
+                $("select#category").val($('select#category option:selected').text());
+        });
+    });
+
 
 });
