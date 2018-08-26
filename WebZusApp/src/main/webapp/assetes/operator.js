@@ -1,5 +1,6 @@
 $(document).ready(function(){
 
+    $('select#subcategory2').hide();
     $('select#brands').on('click', function(data){
 
         $value = $(data.target).val();
@@ -13,7 +14,7 @@ $(document).ready(function(){
                     html += "<option>" + data[key] + "</option>";
 
                 }
-                
+
                 $("select#models").html(html);
                 $("select#models").val($('select#models option:selected').text());
             });
@@ -54,5 +55,41 @@ $(document).ready(function(){
         });
     });
 
+    $('select#category').on('click', function (data) {
+
+        $value = $(data.target).val();
+
+        $.post("subcategory-choosing", {'category': $value})
+            .done(function (data) {
+
+                var html = "";
+                for( var key in data){
+                    html += "<option>" + data[key] + "</option>";
+                }
+                $("select#subcategory").html(html);
+                $("select#subcategory").val($('select#subcategory option:selected').text());
+            });
+    });
+
+    $('select#subcategory').on('click', function(data){
+
+        $value = $(data.target).val();
+
+        $.post("subcategory-choosing", {'subcategory' : $value})
+            .done(function (data) {
+
+                $('select#subcategory2').fadeIn();
+
+                var html = "";
+                for( var key in data){
+                    html += "<option>" + data[key] + "</option>";
+                }
+
+                $("select#subcategory2").html(html);
+                $("select#subcategory2").val($('select#subcategory option:selected').text());
+
+            });
+
+    });
 
 });

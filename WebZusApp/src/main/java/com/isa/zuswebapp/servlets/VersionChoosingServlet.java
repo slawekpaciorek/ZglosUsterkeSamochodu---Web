@@ -31,7 +31,8 @@ public class VersionChoosingServlet extends HttpServlet {
         resp.setContentType("application/json");
 
         String modelName = req.getParameter("model");
-        String brandLink = ModelChoosingServlet.getLinkHandler();
+        Cars car = carCDISessionDao.getActualCar();
+        String brandLink = car.getBrand().getLink();
 
         if(modelName.isEmpty() || modelName==null) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("model-choosing");
@@ -46,7 +47,7 @@ public class VersionChoosingServlet extends HttpServlet {
                 .getLink();
 
         Models model = modelsList.stream().filter(models->models.getName().equals(modelName)).findAny().get();
-        Cars car = carCDISessionDao.getActualCar();
+
         car.setModel(model);
         carCDISessionDao.setActualCar(car);
 

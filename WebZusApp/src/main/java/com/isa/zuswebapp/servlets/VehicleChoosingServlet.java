@@ -73,7 +73,7 @@ public class VehicleChoosingServlet extends HttpServlet{
 
         response.setContentType("application/json");
         ServletContext context = getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher("/category-choosing");
+        RequestDispatcher dispatcher = context.getRequestDispatcher("/subcategory-choosing");
         dispatcher.include(request, response);
 
 
