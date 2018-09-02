@@ -35,7 +35,7 @@ public class VersionChoosingServlet extends HttpServlet {
         String brandLink = car.getBrand().getLink();
 
         if(modelName.isEmpty() || modelName==null) {
-            RequestDispatcher dispatcher = req.getRequestDispatcher("model-choosing");
+            RequestDispatcher dispatcher = req.getRequestDispatcher("/model-choosing");
             dispatcher.include(req, resp);
         }
 

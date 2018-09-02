@@ -23,6 +23,7 @@
         <label>Wybór podkategorii</label>
         <select name="subcategory" id="subcategory"></select>
         <select name="subcategory" id="subcategory2"></select>
+        <select name="subcategory" id="subcategory3"></select>
     </form>
 
 </div>

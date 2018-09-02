@@ -2,7 +2,11 @@ package com.isa.zuswebapp.cdi;
 
 import com.isa.zuswebapp.domain.Part;
 
-public class PartsCDISessionDaoBean implements PartsCDISessionDao {
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+
+@SessionScoped
+public class PartsCDISessionDaoBean implements PartsCDISessionDao, Serializable {
 
     private Part part;
 

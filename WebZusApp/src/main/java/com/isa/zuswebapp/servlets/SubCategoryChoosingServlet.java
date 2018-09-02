@@ -3,7 +3,9 @@ package com.isa.zuswebapp.servlets;
 import com.google.gson.Gson;
 import com.infoshareacademy.*;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
+import com.isa.zuswebapp.cdi.PartsCDISessionDao;
 import com.isa.zuswebapp.domain.Cars;
+import com.isa.zuswebapp.domain.Part;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -22,16 +24,20 @@ public class SubCategoryChoosingServlet extends HttpServlet {
 
     @Inject
     CarsCDISessionDao carCDISessionDao;
+    @Inject
+    PartsCDISessionDao partsCDISessionDao;
 
-    private static String categoryHandler;
+
 
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
+
         Cars car = carCDISessionDao.getActualCar();
         ModelDetails version = car.getVersion();
+
         String categoryName = req.getParameter("category");
         String subcategoryName = req.getParameter("subcategory");
         String categoryLink = null;
@@ -49,10 +55,17 @@ public class SubCategoryChoosingServlet extends HttpServlet {
         if(subcategoryName==null) {
             Category category = cateogryList.stream().filter(categories -> categories.getName().equals(categoryName)).findAny().get();
             categoryLink = category.getLink();
-            categoryHandler = categoryLink;
+            Part part = new Part();
+            part.setCategory(category);
+            partsCDISessionDao.setActuallPart(part);
+
         }else{
-            Category subcategory = new PartsCategory().partsCategorySubList(categoryHandler).stream().filter(x->x.getLink().equals(categoryHandler)).findAny().get();
+            Part part = partsCDISessionDao.getActuallPart();
+            categoryLink = part.getCategory().getLink();
+            Category subcategory = new PartsCategory().partsCategorySubList(categoryLink).stream().filter(x->x.getName().equals(subcategoryName)).findAny().get();
             categoryLink = subcategory.getLink();
+//            part.setAndaddToList(subcategory);
+//            partsCDISessionDao.setActuallPart(part);
         }
         List<Category> subcategory = new PartsCategory().partsCategorySubList(categoryLink);
         List<String> subcategoryNames = subcategory.stream().map(Category::getName).collect(Collectors.toList());

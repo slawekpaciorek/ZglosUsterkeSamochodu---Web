@@ -1,6 +1,8 @@
 $(document).ready(function(){
 
     $('select#subcategory2').hide();
+    $('select#subcategory3').hide();
+
     $('select#brands').on('click', function(data){
 
         $value = $(data.target).val();
@@ -9,6 +11,7 @@ $(document).ready(function(){
             .done(function( data ) {
 
                 var html = "";
+                html += "<option selected>Wybierz</option>";
 
                 for (var key in data) {
                     html += "<option>" + data[key] + "</option>";
@@ -28,7 +31,9 @@ $(document).ready(function(){
         $.post("version-choosing", {'model': $value})
             .done(function (data) {
                var html = "";
-               for(var key in data){
+                html += "<option selected>Wybierz</option>";
+
+                for(var key in data){
                    html += "<option>" + data[key] + "</option>";
                }
 
@@ -47,6 +52,8 @@ $(document).ready(function(){
             .done(function (data) {
 
                 var html = "";
+                html += "<option selected>Wybierz</option>";
+
                 for( var key in data){
                     html += "<option>" + data[key] + "</option>";
                 }
@@ -63,6 +70,8 @@ $(document).ready(function(){
             .done(function (data) {
 
                 var html = "";
+                html += "<option selected>Wybierz</option>";
+
                 for( var key in data){
                     html += "<option>" + data[key] + "</option>";
                 }
@@ -78,18 +87,41 @@ $(document).ready(function(){
         $.post("subcategory-choosing", {'subcategory' : $value})
             .done(function (data) {
 
-                $('select#subcategory2').fadeIn();
+                $('select#subcategory2').show();
 
                 var html = "";
+                html += "<option selected>Wybierz</option>";
                 for( var key in data){
                     html += "<option>" + data[key] + "</option>";
                 }
 
                 $("select#subcategory2").html(html);
-                $("select#subcategory2").val($('select#subcategory option:selected').text());
+                $("select#subcategory2").val($('select#subcategory2 option:selected').text());
 
             });
 
     });
+
+    // $('select#subcategory2').on('click', function(data){
+    //
+    //     $value = $(data.target).val();
+    //
+    //     $.post("subcategory-choosing", {'subcategory' : $value})
+    //         .done(function (data) {
+    //
+    //             $('select#subcategory3').show();
+    //
+    //             var html = "";
+    //             html += "<option selected>Wybierz</option>";
+    //             for( var key in data){
+    //                 html += "<option>" + data[key] + "</option>";
+    //             }
+    //
+    //             $("select#subcategory3").html(html);
+    //             $("select#subcategory3").val($('select#subcategory3 option:selected').text());
+    //
+    //         });
+
+    // });
 
 });

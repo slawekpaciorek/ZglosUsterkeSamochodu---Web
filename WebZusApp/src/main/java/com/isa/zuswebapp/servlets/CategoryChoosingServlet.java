@@ -3,7 +3,9 @@ package com.isa.zuswebapp.servlets;
 import com.google.gson.Gson;
 import com.infoshareacademy.*;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
+import com.isa.zuswebapp.cdi.PartsCDISessionDao;
 import com.isa.zuswebapp.domain.Cars;
+import com.isa.zuswebapp.domain.Part;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -21,12 +23,14 @@ public class CategoryChoosingServlet extends HttpServlet {
 
     @Inject
     CarsCDISessionDao carCDISessionDao;
+    PartsCDISessionDao partsCDISessionDao;
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
         String versionName = req.getParameter("version");
+
 
         if(versionName == null || versionName.isEmpty()) {
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/version-choosing");

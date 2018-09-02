@@ -14,6 +14,13 @@ public class Part {
     private Set<Category> subcategoryList;
     private Stock stock;
 
+
+    public void setAndaddToList(Category subcategory){
+        this.subcategory = subcategory;
+        subcategoryList.add(subcategory);
+    }
+
+
     public String getName() {
         return name;
     }
