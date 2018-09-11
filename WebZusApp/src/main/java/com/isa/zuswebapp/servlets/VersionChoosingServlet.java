@@ -7,6 +7,8 @@ import com.infoshareacademy.Models;
 import com.infoshareacademy.ModelsList;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
 import com.isa.zuswebapp.domain.Cars;
+import com.isa.zuswebapp.freemarker.TemplateSupplier;
+import freemarker.template.Template;
 
 import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
@@ -16,7 +18,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @WebServlet("version-choosing")

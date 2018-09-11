@@ -31,12 +31,11 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     public static String linkHandler;
 
-    Logger logger = Logger.getLogger(getClass().getName());
-    Template template;
+    private Logger logger = Logger.getLogger(getClass().getName());
+    private Template template;
 
     @Inject
     UserCDISessionDao userCDISessionDao;
-    CarsCDISessionDao carsCDISessionDao;
 
     public void init() throws ServletException{
 
@@ -73,7 +72,7 @@ public class VehicleChoosingServlet extends HttpServlet{
 
         response.setContentType("application/json");
         ServletContext context = getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher("/subcategory-choosing");
+        RequestDispatcher dispatcher = context.getRequestDispatcher("/version-choosing");
         dispatcher.include(request, response);
 
 
