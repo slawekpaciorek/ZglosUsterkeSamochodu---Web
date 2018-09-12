@@ -41,7 +41,7 @@ public class VersionChoosingServlet extends HttpServlet {
         Cars car = carCDISessionDao.getActualCar();
         String brandLink = car.getBrand().getLink();
 
-        if(modelName.isEmpty() || modelName==null) {
+        if(modelName==null) {
             RequestDispatcher dispatcher = req.getRequestDispatcher("/model-choosing");
             dispatcher.include(req, resp);
         }

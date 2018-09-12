@@ -17,13 +17,10 @@
         <label>Wybór wersji pojazdu</label>
         <select name="version" id="version"></select>
 
-        <label>Wybór kategorii</label>
-        <select name="category" id="category"></select>
+    </form>
 
-        <label>Wybór podkategorii</label>
-        <select name="subcategory" id="subcategory"></select>
-        <select name="subcategory" id="subcategory2"></select>
-        <select name="subcategory" id="subcategory3"></select>
+    <form method="post">
+        <button type="submit" class="btn">Idź dalej</button>
     </form>
 
 </div>

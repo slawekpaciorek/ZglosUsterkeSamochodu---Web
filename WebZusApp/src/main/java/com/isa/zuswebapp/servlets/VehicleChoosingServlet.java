@@ -1,7 +1,6 @@
 package com.isa.zuswebapp.servlets;
 
-import com.infoshareacademy.Brands;
-import com.infoshareacademy.BrandsList;
+import com.infoshareacademy.*;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
 import com.isa.zuswebapp.cdi.UserCDISessionDao;
 import com.isa.zuswebapp.domain.Cars;
@@ -36,6 +35,8 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     @Inject
     UserCDISessionDao userCDISessionDao;
+    @Inject
+    CarsCDISessionDao carsCDISessionDao;
 
     public void init() throws ServletException{
 
@@ -47,7 +48,7 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
 
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter pw = response.getWriter();
@@ -71,11 +72,27 @@ public class VehicleChoosingServlet extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 
         response.setContentType("application/json");
-        ServletContext context = getServletContext();
-        RequestDispatcher dispatcher = context.getRequestDispatcher("/version-choosing");
-        dispatcher.include(request, response);
+        String versionName = request.getParameter("version");
+
+        if (versionName == null) {
+            ServletContext context = getServletContext();
+            RequestDispatcher dispatcher = context.getRequestDispatcher("/version-choosing");
+            dispatcher.include(request, response);
+        }
+            Cars car = carsCDISessionDao.getActualCar();
+            Models model = car.getModel();
+            String modelLink = model.getLink();
+            ModelDetails version = new ModelDetailList().getModelDetails(modelLink)
+                    .stream()
+                    .filter(x->x.getName().equals(versionName))
+                    .findAny().get();
+            car.setVersion(version);
+
+            carsCDISessionDao.setActualCar(car);
+
+            response.sendRedirect("parts-choosing");
+        }
+
 
 
     }
-
-}

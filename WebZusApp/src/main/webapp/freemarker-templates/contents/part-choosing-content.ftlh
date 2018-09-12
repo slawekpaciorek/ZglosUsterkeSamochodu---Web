@@ -4,21 +4,12 @@
     <h3 class="title-bar">Wybierz interesujące cię części : </h3>
     <div class="container-fluid">
         <form method="post" class="vehicle">
-            <label>Wybór marki pojazdu</label>
-            <select name="brands" id="brands">
+            <label>Wybór kategorii pojazdu</label>
+            <select name="category" id="category">
             <#list categories as category>
                 <option value="${category.getLink()}">${category.getName()}</option>
             </#list>
             </select>
-
-            <label>Wybór modelu pojazdu</label>
-            <select name="models" id="models"></select>
-
-            <label>Wybór wersji pojazdu</label>
-            <select name="version" id="version"></select>
-
-            <label>Wybór kategorii</label>
-            <select name="category" id="category"></select>
 
             <label>Wybór podkategorii</label>
             <select name="subcategory" id="subcategory"></select>
