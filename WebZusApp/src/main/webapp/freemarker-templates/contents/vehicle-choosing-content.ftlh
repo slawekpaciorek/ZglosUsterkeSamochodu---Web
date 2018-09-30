@@ -17,9 +17,6 @@
         <label>Wybór wersji pojazdu</label>
         <select name="version" id="version"></select>
 
-    </form>
-
-    <form method="post">
         <button type="submit" class="btn">Idź dalej</button>
     </form>
 

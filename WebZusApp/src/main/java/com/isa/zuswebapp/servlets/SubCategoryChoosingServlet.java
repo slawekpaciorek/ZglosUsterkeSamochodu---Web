@@ -43,7 +43,7 @@ public class SubCategoryChoosingServlet extends HttpServlet {
         String categoryLink = null;
 
         if(subcategoryName == null) {
-            if (categoryName.isEmpty() || categoryName == null) {
+            if (categoryName.isEmpty() || (categoryName == null)) {
                 RequestDispatcher dispatcher = req.getRequestDispatcher("category-choosing");
                 dispatcher.include(req, resp);
             }
@@ -62,12 +62,12 @@ public class SubCategoryChoosingServlet extends HttpServlet {
         }else{
             Part part = partsCDISessionDao.getActuallPart();
             categoryLink = part.getCategory().getLink();
-            Category subcategory = new PartsCategory().partsCategorySubList(categoryLink).stream().filter(x->x.getName().equals(subcategoryName)).findAny().get();
+            Category subcategory = new PartsCategory().getPartsCategory(categoryLink).stream().filter(x->x.getName().equals(subcategoryName)).findAny().get();
             categoryLink = subcategory.getLink();
-//            part.setAndaddToList(subcategory);
-//            partsCDISessionDao.setActuallPart(part);
+            part.setAndaddToList(subcategory);
+            partsCDISessionDao.setActuallPart(part);
         }
-        List<Category> subcategory = new PartsCategory().partsCategorySubList(categoryLink);
+        List<Category> subcategory = new PartsCategory().getPartsCategory(categoryLink);
         List<String> subcategoryNames = subcategory.stream().map(Category::getName).collect(Collectors.toList());
 
         String subcategoryJson = new Gson().toJson(subcategoryNames);

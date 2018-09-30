@@ -26,11 +26,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-@WebServlet("category-choosing")
+@WebServlet("parts-choosing")
 public class CategoryChoosingServlet extends HttpServlet {
 
     @Inject
     CarsCDISessionDao carCDISessionDao;
+    @Inject
     PartsCDISessionDao partsCDISessionDao;
 
 
@@ -47,7 +48,7 @@ public class CategoryChoosingServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("html/text;charset=UTF-8");
+        resp.setContentType("text/html;charset=UTF-8");
 
         Cars car = carCDISessionDao.getActualCar();
         String versionLink = car.getVersion().getLink();
@@ -67,34 +68,33 @@ public class CategoryChoosingServlet extends HttpServlet {
             e.printStackTrace();
         }
 
-
     }
 
-//    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//
-//        resp.setContentType("application/json");
-//        String versionName = req.getParameter("version");
-//
-//
-//        if(versionName == null || versionName.isEmpty()) {
-//            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/version-choosing");
-//            requestDispatcher.include(req, resp);
-//        }
-//
-//        Cars car = carCDISessionDao.getActualCar();
-//        Models model = car.getModel();
-//        ModelDetails version = new ModelDetailList().getModelDetails(model.getLink()).stream().filter(versions->versions.getName().equals(versionName)).findAny().get();
-//        car.setVersion(version);
-//        carCDISessionDao.setActualCar(car);
-//
-//        List<Category> categories = new PartsCategory().getPartsCategory(version.getLink());
-//        List<String> categoriesNames = categories.stream().map(Category::getName).collect(Collectors.toList());
-//
-//        String jsonCategory = new Gson().toJson(categoriesNames);
-//
-//        resp.getWriter().write(jsonCategory);
-//        resp.getWriter().flush();
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-//    }
+        resp.setContentType("application/json");
+        String versionName = req.getParameter("version");
+
+
+        if(versionName == null || versionName.isEmpty()) {
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/subcategory-choosing");
+            requestDispatcher.include(req, resp);
+        }
+
+        Cars car = carCDISessionDao.getActualCar();
+        Models model = car.getModel();
+        ModelDetails version = new ModelDetailList().getModelDetails(model.getLink()).stream().filter(versions->versions.getName().equals(versionName)).findAny().get();
+        car.setVersion(version);
+        carCDISessionDao.setActualCar(car);
+
+        List<Category> categories = new PartsCategory().getPartsCategory(version.getLink());
+        List<String> categoriesNames = categories.stream().map(Category::getName).collect(Collectors.toList());
+
+        String jsonCategory = new Gson().toJson(categoriesNames);
+
+        resp.getWriter().write(jsonCategory);
+        resp.getWriter().flush();
+
+    }
 }
