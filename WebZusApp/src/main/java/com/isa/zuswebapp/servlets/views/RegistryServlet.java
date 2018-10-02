@@ -1,4 +1,4 @@
-package com.isa.zuswebapp.servlets;
+package com.isa.zuswebapp.servlets.views;
 
 import com.isa.zuswebapp.dao.UserRepoDao;
 import com.isa.zuswebapp.domain.User;

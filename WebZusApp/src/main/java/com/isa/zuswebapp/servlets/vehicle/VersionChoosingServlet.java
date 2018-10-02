@@ -1,4 +1,4 @@
-package com.isa.zuswebapp.servlets;
+package com.isa.zuswebapp.servlets.vehicle;
 
 import com.google.gson.Gson;
 import com.infoshareacademy.ModelDetailList;
@@ -46,24 +46,27 @@ public class VersionChoosingServlet extends HttpServlet {
             dispatcher.include(req, resp);
         }
 
-        List<Models> modelsList = new ModelsList().getModelsList(brandLink);
-        String modelLink = modelsList.stream()
-                .filter(x->x.getName().equals(modelName))
-                .findAny()
-                .get()
-                .getLink();
+        if(!modelName.equals("Wybierz")) {
+            List<Models> modelsList = new ModelsList().getModelsList(brandLink);
+            String modelLink = modelsList.stream()
+                    .filter(x -> x.getName().equals(modelName))
+                    .findAny()
+                    .get()
+                    .getLink();
 
-        Models model = modelsList.stream().filter(models->models.getName().equals(modelName)).findAny().get();
+            Models model = modelsList.stream().filter(models -> models.getName().equals(modelName)).findAny().get();
 
-        car.setModel(model);
-        carCDISessionDao.setActualCar(car);
+            car.setModel(model);
+            carCDISessionDao.setActualCar(car);
 
-        List<ModelDetails> versions = new ModelDetailList().getModelDetails(modelLink);
-        List<String> versionNames = versions.stream().map(ModelDetails::getName).collect(Collectors.toList());
 
-        String json = new Gson().toJson(versionNames);
-        resp.getWriter().write(json);
-        resp.getWriter().flush();
+            List<ModelDetails> versions = new ModelDetailList().getModelDetails(modelLink);
+            List<String> versionNames = versions.stream().map(ModelDetails::getName).collect(Collectors.toList());
 
+            String json = new Gson().toJson(versionNames);
+            resp.getWriter().write(json);
+            resp.getWriter().flush();
+
+            }
+        }
     }
-}

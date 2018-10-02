@@ -34,7 +34,20 @@ public class CarsRepoDaoBean implements CarsRepoDao {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
+    @Override
+    public Cars getCar(Cars car){
+        try {
+            return CarsRepo.getCarsRepository().stream().filter(x->x.equals(car)).findAny().get();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 }

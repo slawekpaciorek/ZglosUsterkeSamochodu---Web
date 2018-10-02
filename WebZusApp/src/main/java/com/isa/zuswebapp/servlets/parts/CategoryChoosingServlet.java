@@ -1,4 +1,4 @@
-package com.isa.zuswebapp.servlets;
+package com.isa.zuswebapp.servlets.parts;
 
 import com.google.gson.Gson;
 import com.infoshareacademy.*;
@@ -31,8 +31,6 @@ public class CategoryChoosingServlet extends HttpServlet {
 
     @Inject
     CarsCDISessionDao carCDISessionDao;
-    @Inject
-    PartsCDISessionDao partsCDISessionDao;
 
 
     private Logger logger = Logger.getLogger(getClass().getName());
@@ -50,8 +48,8 @@ public class CategoryChoosingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
 
-        Cars car = carCDISessionDao.getActualCar();
-        String versionLink = car.getVersion().getLink();
+         Cars car = carCDISessionDao.getActualCar();
+         String versionLink = car.getVersion().getLink();
 
         List<Category> categories = new PartsCategory().getPartsCategory(versionLink);
 
@@ -74,21 +72,14 @@ public class CategoryChoosingServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
-        String versionName = req.getParameter("version");
 
-
-        if(versionName == null || versionName.isEmpty()) {
+       Cars car = carCDISessionDao.getActualCar();
+       String versionLink = car.getVersion().getLink();
             RequestDispatcher requestDispatcher = req.getRequestDispatcher("/subcategory-choosing");
             requestDispatcher.include(req, resp);
-        }
 
-        Cars car = carCDISessionDao.getActualCar();
-        Models model = car.getModel();
-        ModelDetails version = new ModelDetailList().getModelDetails(model.getLink()).stream().filter(versions->versions.getName().equals(versionName)).findAny().get();
-        car.setVersion(version);
-        carCDISessionDao.setActualCar(car);
 
-        List<Category> categories = new PartsCategory().getPartsCategory(version.getLink());
+        List<Category> categories = new PartsCategory().getPartsCategory(versionLink);
         List<String> categoriesNames = categories.stream().map(Category::getName).collect(Collectors.toList());
 
         String jsonCategory = new Gson().toJson(categoriesNames);

@@ -1,4 +1,4 @@
-package com.isa.zuswebapp.servlets;
+package com.isa.zuswebapp.servlets.vehicle;
 
 import com.infoshareacademy.*;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
@@ -69,30 +69,33 @@ public class VehicleChoosingServlet extends HttpServlet{
 
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
         response.setContentType("application/json");
         String versionName = request.getParameter("version");
+        Cars car = carsCDISessionDao.getActualCar();
 
-        if (versionName == null) {
+
+        if (versionName == null || versionName.equals("Wybierz")) {
             ServletContext context = getServletContext();
             RequestDispatcher dispatcher = context.getRequestDispatcher("/version-choosing");
             dispatcher.include(request, response);
         }
-            Cars car = carsCDISessionDao.getActualCar();
-            Models model = car.getModel();
-            String modelLink = model.getLink();
+
+        if(!versionName.equals("Wybierz")) {
+
+            String modelLink = car.getModel().getLink();
             ModelDetails version = new ModelDetailList().getModelDetails(modelLink)
                     .stream()
-                    .filter(x->x.getName().equals(versionName))
-                    .findAny().get();
+                    .filter(model -> model.getName().equals(versionName))
+                    .findAny()
+                    .get();
+
             car.setVersion(version);
-
             carsCDISessionDao.setActualCar(car);
-
             response.sendRedirect("parts-choosing");
         }
 
-
-
     }
+
+}

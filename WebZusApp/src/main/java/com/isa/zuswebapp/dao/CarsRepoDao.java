@@ -11,4 +11,6 @@ public interface CarsRepoDao {
     void addCar(Cars car);
 
     List<Cars> getCarsList();
+
+    Cars getCar(Cars car);
 }

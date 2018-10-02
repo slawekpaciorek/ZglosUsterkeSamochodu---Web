@@ -44,24 +44,6 @@ $(document).ready(function(){
 
     });
 
-    $('select#version').on('click', function (data) {
-
-        $value = $(data.target).val();
-
-        $.post("category-choosing", {'version': $value})
-            .done(function (data) {
-
-                var html = "";
-                html += "<option selected>Wybierz</option>";
-
-                for( var key in data){
-                    html += "<option>" + data[key] + "</option>";
-                }
-                $("select#category").html(html);
-                $("select#category").val($('select#category option:selected').text());
-        });
-    });
-
     $('select#category').on('click', function (data) {
 
         $value = $(data.target).val();
@@ -79,49 +61,49 @@ $(document).ready(function(){
                 $("select#subcategory").val($('select#subcategory option:selected').text());
             });
     });
-
-    $('select#subcategory').on('click', function(data){
-
-        $value = $(data.target).val();
-
-        $.post("subcategory-choosing", {'subcategory' : $value})
-            .done(function (data) {
-
-                $('select#subcategory2').show();
-
-                var html = "";
-                html += "<option selected>Wybierz</option>";
-                for( var key in data){
-                    html += "<option>" + data[key] + "</option>";
-                }
-
-                $("select#subcategory2").html(html);
-                $("select#subcategory2").val($('select#subcategory2 option:selected').text());
-
-            });
-
-    });
-
-    $('select#subcategory2').on('click', function(data){
-
-        $value = $(data.target).val();
-
-        $.post("subcategory-choosing", {'subcategory' : $value})
-            .done(function (data) {
-
-                $('select#subcategory3').show();
-
-                var html = "";
-                html += "<option selected>Wybierz</option>";
-                for( var key in data){
-                    html += "<option>" + data[key] + "</option>";
-                }
-
-                $("select#subcategory3").html(html);
-                $("select#subcategory3").val($('select#subcategory3 option:selected').text());
-
-            });
-
-    });
+    //
+    // $('select#subcategory').on('click', function(data){
+    //
+    //     $value = $(data.target).val();
+    //
+    //     $.post("subcategory-choosing", {'subcategory' : $value})
+    //         .done(function (data) {
+    //
+    //             $('select#subcategory2').show();
+    //
+    //             var html = "";
+    //             html += "<option selected>Wybierz</option>";
+    //             for( var key in data){
+    //                 html += "<option>" + data[key] + "</option>";
+    //             }
+    //
+    //             $("select#subcategory2").html(html);
+    //             $("select#subcategory2").val($('select#subcategory2 option:selected').text());
+    //
+    //         });
+    //
+    // });
+    //
+    // $('select#subcategory2').on('click', function(data){
+    //
+    //     $value = $(data.target).val();
+    //
+    //     $.post("subcategory-choosing", {'subcategory' : $value})
+    //         .done(function (data) {
+    //
+    //             $('select#subcategory3').show();
+    //
+    //             var html = "";
+    //             html += "<option selected>Wybierz</option>";
+    //             for( var key in data){
+    //                 html += "<option>" + data[key] + "</option>";
+    //             }
+    //
+    //             $("select#subcategory3").html(html);
+    //             $("select#subcategory3").val($('select#subcategory3 option:selected').text());
+    //
+    //         });
+    //
+    // });
 
 });

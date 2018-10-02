@@ -1,4 +1,4 @@
-package com.isa.zuswebapp.servlets;
+package com.isa.zuswebapp.servlets.vehicle;
 
 import com.google.gson.Gson;
 import com.infoshareacademy.Brands;
@@ -6,7 +6,6 @@ import com.infoshareacademy.BrandsList;
 import com.infoshareacademy.Models;
 import com.infoshareacademy.ModelsList;
 import com.isa.zuswebapp.cdi.CarsCDISessionDao;
-import com.isa.zuswebapp.dao.CarsRepoDao;
 import com.isa.zuswebapp.domain.Cars;
 
 import javax.inject.Inject;
@@ -22,7 +21,6 @@ import java.util.stream.Collectors;
 @WebServlet("model-choosing")
 public class ModelChoosingServlet extends HttpServlet {
 
-    private static String linkHandler;
 
     @Inject
     CarsCDISessionDao carCDISessionDao;
@@ -32,7 +30,6 @@ public class ModelChoosingServlet extends HttpServlet {
 
         resp.setContentType("application/json");
         String link= req.getParameter("brand");
-        setLinkHandler(link);
 
         Cars cars = new Cars();
         Brands brand = new BrandsList().getBrandsList().stream().filter(brands->brands.getLink().equals(link)).findAny().get();
@@ -48,11 +45,4 @@ public class ModelChoosingServlet extends HttpServlet {
 
     }
 
-    public static String getLinkHandler() {
-        return linkHandler;
-    }
-
-    public static void setLinkHandler(String linkHandler) {
-        ModelChoosingServlet.linkHandler = linkHandler;
-    }
 }

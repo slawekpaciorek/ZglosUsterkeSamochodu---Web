@@ -8,7 +8,7 @@
 <!--
   <servlet>
     <servlet-name>IndexServlet</servlet-name>
-    <servlet-class>com.isa.zuswebapp.servlets.IndexServlet</servlet-class>
+    <servlet-class>com.isa.zuswebapp.servlets.views.IndexServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>IndexServlet</servlet-name>
