@@ -37,7 +37,7 @@ public class ModelChoosingServlet extends HttpServlet {
         carCDISessionDao.setActualCar(cars);
 
         List<Models> listOfModels = new ModelsList().getModelsList(link);
-        List<String> listOfModelsNames = listOfModels.stream().map(model->model.getName()).collect(Collectors.toList());
+        List<String> listOfModelsNames = listOfModels.stream().map(Models::getName).collect(Collectors.toList());
 
         String jsonBrands = new Gson().toJson(listOfModelsNames);
         resp.getWriter().write(jsonBrands);

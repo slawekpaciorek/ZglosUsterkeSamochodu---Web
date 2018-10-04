@@ -10,14 +10,12 @@ public class Part {
 
     private String name;
     private Category category;
-    private Category subcategory;
     private Set<Category> subcategoryList;
     private Stock stock;
 
 
-    public void setAndaddToList(Category subcategory){
-        this.subcategory = subcategory;
-        subcategoryList.add(subcategory);
+    public void addToSubcategoryList(Category category){ ;
+        subcategoryList.add(category);
     }
 
 
@@ -35,14 +33,6 @@ public class Part {
 
     public void setCategory(Category category) {
         this.category = category;
-    }
-
-    public Category getSubcategory() {
-        return subcategory;
-    }
-
-    public void setSubcategory(Category subcategory) {
-        this.subcategory = subcategory;
     }
 
     public Set<Category> getSubcategoryList() {

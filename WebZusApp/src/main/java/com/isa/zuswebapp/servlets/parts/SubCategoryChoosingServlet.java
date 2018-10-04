@@ -35,14 +35,33 @@ public class SubCategoryChoosingServlet extends HttpServlet {
         resp.setContentType("application/json");
         ServletContext context = req.getServletContext();
         RequestDispatcher dispatcher;
-        String categoryLink = req.getParameter("category");
+        String categoryName = req.getParameter("category");
+        String subcategory = req.getParameter("subcategory");
+        String versionLink = getVersionLink();
+        Category category = new PartsCategory().getPartsCategory(versionLink).stream().filter(link->link.getName().equals(categoryName)).findAny().get();
+        Part part = partsCDISessionDao.getActuallPart();
+        part.setCategory(category);
+        List<Category> subCategories;
+        List<String> subCategoriesNames;
 
-        List<Category> subcategories = new PartsCategory().getPartsCategory(categoryLink);
-        List<String> subcategoreisNames = subcategories.stream().map(Category::getName).collect(Collectors.toList());
+        if(!(subcategory==null) || subcategory.equals("Wybierz")) {
+            String subcategoryLink = new PartsCategory().getPartsCategory(categoryName).stream().filter(name->name.equals(subcategory)).findAny().get().getLink();
+            subCategories = new PartsCategory().getPartsCategory(subcategoryLink);
+            subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
 
-        String jsonCateogires = new Gson().toJson(subcategoreisNames);
-        resp.getWriter().write(jsonCateogires);
+        }
+        else {
+            subCategories = new PartsCategory().getPartsCategory(categoryName);
+            subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
+        }
+        String jsonCategories = new Gson().toJson(subCategoriesNames);
+        resp.getWriter().write(jsonCategories);
         resp.getWriter().flush();
 
+    }
+
+    private String getVersionLink(){
+        Cars car = carCDISessionDao.getActualCar();
+        return car.getVersion().getLink();
     }
 }
