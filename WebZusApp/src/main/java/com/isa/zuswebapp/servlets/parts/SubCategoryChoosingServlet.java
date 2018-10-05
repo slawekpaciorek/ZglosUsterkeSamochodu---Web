@@ -38,19 +38,24 @@ public class SubCategoryChoosingServlet extends HttpServlet {
         String categoryName = req.getParameter("category");
         String subcategory = req.getParameter("subcategory");
         String versionLink = getVersionLink();
-        Category category = new PartsCategory().getPartsCategory(versionLink).stream().filter(link->link.getName().equals(categoryName)).findAny().get();
-        Part part = partsCDISessionDao.getActuallPart();
-        part.setCategory(category);
         List<Category> subCategories;
         List<String> subCategoriesNames;
+        Part part = new Part();
 
-        if(!(subcategory==null) || subcategory.equals("Wybierz")) {
+
+        if(!(subcategory==null)) {
+
             String subcategoryLink = new PartsCategory().getPartsCategory(categoryName).stream().filter(name->name.equals(subcategory)).findAny().get().getLink();
             subCategories = new PartsCategory().getPartsCategory(subcategoryLink);
             subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
 
         }
         else {
+            Category category = new PartsCategory().getPartsCategory(versionLink)
+                    .stream().filter(link->link.getLink().equals(categoryName))
+                    .findAny().get();
+            part.setCategory(category);
+            partsCDISessionDao.setActuallPart(part);
             subCategories = new PartsCategory().getPartsCategory(categoryName);
             subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
         }
