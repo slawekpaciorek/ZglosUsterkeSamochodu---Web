@@ -32,41 +32,82 @@ public class SubCategoryChoosingServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+//        set properties for method
         resp.setContentType("application/json");
-        ServletContext context = req.getServletContext();
-        RequestDispatcher dispatcher;
-        String categoryName = req.getParameter("category");
-        String subcategory = req.getParameter("subcategory");
-        String versionLink = getVersionLink();
-        List<Category> subCategories;
-        List<String> subCategoriesNames;
         Part part = new Part();
 
+//        get parameters
+        String categoryLink = req.getParameter("category");
+        String subcategoryName = req.getParameter("subcategory");
 
-        if(!(subcategory==null)) {
+//        define category
+        Category category = null;
 
-            String subcategoryLink = new PartsCategory().getPartsCategory(categoryName).stream().filter(name->name.equals(subcategory)).findAny().get().getLink();
-            subCategories = new PartsCategory().getPartsCategory(subcategoryLink);
-            subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
+//        choosing subcategory - level 1
 
-        }
-        else {
-            Category category = new PartsCategory().getPartsCategory(versionLink)
-                    .stream().filter(link->link.getLink().equals(categoryName))
-                    .findAny().get();
+        if(subcategoryName==null){
+//           setting condition for categoryLink = null
+            if(categoryLink==null) {
+                RequestDispatcher dispatcher = req.getRequestDispatcher("category-choosing");
+                dispatcher.include(req, resp);
+            }
+//            define category
+            category = getCategoryByLink(getVersionLink(), categoryLink);
+            String subcategoriesLink = category.getLink();
+//            define subcategory list
+            List<Category> subcategories = getCategoriesList(subcategoriesLink);
+//            send data to view
+            parseAndSendData(subcategories, resp);
+//            set properties of PART
             part.setCategory(category);
+//            part.addToSubcategoryList(category);
             partsCDISessionDao.setActuallPart(part);
-            subCategories = new PartsCategory().getPartsCategory(categoryName);
-            subCategoriesNames = subCategories.stream().map(Category::getName).collect(Collectors.toList());
         }
-        String jsonCategories = new Gson().toJson(subCategoriesNames);
-        resp.getWriter().write(jsonCategories);
-        resp.getWriter().flush();
+
+//        choosing subcategory next level
+        if(subcategoryName!=null){
+            String subcategoriesLink = partsCDISessionDao.getActuallPart().getCategory().getLink();
+//            define subcategory and link
+            Category subcategory = getCategoriesList(subcategoriesLink).stream().filter(item->item.getName().equals(subcategoryName)).findAny().get();
+            String linkForSubCategory = subcategory.getLink();
+//            define subcategory next level list
+            List<Category> subCategoryNextLevel = getCategoriesList(linkForSubCategory);
+//            send data
+            parseAndSendData(subCategoryNextLevel, resp);
+//            set props for PART
+//            part.addToSubcategoryList(subcategory);
+        }
+
+
 
     }
 
     private String getVersionLink(){
         Cars car = carCDISessionDao.getActualCar();
         return car.getVersion().getLink();
+    }
+
+    private Category getCategoryByLink(String link, String itemLink) throws IOException {
+        return new PartsCategory().getPartsCategory(link).stream().filter(item->item.getLink().equals(itemLink)).findAny().get();
+    }
+    private Category getCategoryByName(String link, String itemName) throws IOException {
+        return new PartsCategory().getPartsCategory(link).stream().filter(item->item.getName().equals(itemName)).findAny().get();
+    }
+
+    private List<Category> getCategoriesList(String link) throws IOException {
+        return new PartsCategory().getPartsCategory(link);
+    }
+
+    private void parseAndSendData(List<Category>list, HttpServletResponse resp) throws IOException{
+        List<String>listNames = list.stream().map(Category::getName).collect(Collectors.toList());
+        Gson parser = new Gson();
+        String jsonString = parser.toJson(listNames);
+        resp.getWriter().write(jsonString);
+        resp.getWriter().flush();
+    }
+
+    public void checkarray(){
+        String letteres = "letters";
+        letteres.contains(String.valueOf('c'));
     }
 }

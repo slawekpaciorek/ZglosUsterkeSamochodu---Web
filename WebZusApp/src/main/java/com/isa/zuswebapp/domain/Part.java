@@ -3,7 +3,6 @@ package com.isa.zuswebapp.domain;
 import com.infoshareacademy.Category;
 import com.infoshareacademy.Stock;
 
-import java.util.Locale;
 import java.util.Set;
 
 public class Part {
